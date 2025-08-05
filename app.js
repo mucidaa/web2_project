@@ -9,7 +9,7 @@ var checkToken = require('./middlewares/checkToken')
 
 var indexRouter = require('./routes/indexRouter');
 var authRouter = require('./routes/authRouter')
-var receitasRouter = require('./routes/receitasRouter')
+var painelRouter = require('./routes/painelRouter')
 
 var app = express();
 
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/receitas', checkToken, receitasRouter);
+app.use('/dashboard', checkToken, painelRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

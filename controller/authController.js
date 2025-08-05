@@ -5,11 +5,11 @@ var jwt = require('jsonwebtoken');
 
 exports.register = async (req, res, next) => {
 
-    const {nome, email, senha, confirmaSenha} = req.body
+    const {nome, username, email, senha, confirmaSenha} = req.body
 
     try {
 
-        if (!nome || !email || !senha || !confirmaSenha) {
+        if (!nome || !username || !email || !senha || !confirmaSenha) {
             throw new Error('Todos os campos são obrigatórios');
         }
         
@@ -17,10 +17,15 @@ exports.register = async (req, res, next) => {
             throw new Error('As senhas não coincidem');
         }
 
-        const usuarioExistente = await Usuario.findOne({ email: email })
+        const emailExistente = await Usuario.findOne({ email: email })
+        const usernameExistente = await Usuario.findOne({ username: username})
 
-        if (usuarioExistente) {
-            throw new Error('Usuário já existente, use outro email')
+        if (emailExistente) {
+            throw new Error('Email existente');
+        }
+
+        if (usernameExistente) {
+            throw new Error('Nome de usuário existente');
         }
 
     } catch (err) {
@@ -32,6 +37,7 @@ exports.register = async (req, res, next) => {
 
     const usuario = new Usuario({
         nome,
+        username,
         email,
         senha: senhaHash
     })
@@ -48,15 +54,15 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
 
-    const {email, senha} = req.body
+    const {username, senha} = req.body
 
     try {
 
-        if (!email || !senha) {
+        if (!username || !senha) {
             throw new Error('Todos os campos são obrigatórios');
         }
 
-        const usuario = await Usuario.findOne({ email: email });
+        const usuario = await Usuario.findOne({ username: username });
 
         if (!usuario) {
             throw new Error('Usuário não existe');
@@ -71,7 +77,7 @@ exports.login = async (req, res, next) => {
         const token = jwt.sign(
             {
                 id: usuario._id,
-                email: usuario.email,
+                username: usuario.username,
             },
             'SENHA_SUPER_SECRETA'
         );

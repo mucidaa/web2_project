@@ -1,2 +1,18 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Fazer Login</h1>
+
+<form method="POST" action="/auth/login">
+    <input type="text" name="username" placeholder="Usuário" required>
+    <input type="password" name="senha" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+</form>
+
+<h1>Registrar</h1>
+
+<form method="POST" action="/auth/register">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="username" placeholder="Usuário" required>
+    <input type="text" name="email" placeholder="E-mail" required>
+    <input type="password" name="senha" placeholder="Senha" required>
+    <input type="password" name="confirmaSenha" placeholder="Confirme sua senha" required>
+    <button type="submit">Entrar</button>
+</form>

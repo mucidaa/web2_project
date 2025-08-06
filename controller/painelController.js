@@ -122,6 +122,6 @@ const getOperacoesByCategoria = async (username, categoria) => {
 
 const getUsuarioAtual = async (username) => {
 
-    return await Usuario.find({ username : username})
+    return await Usuario.findOne({ username : username})
 
 }

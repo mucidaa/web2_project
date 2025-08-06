@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Operacao = mongoose.model('Operacao', {
     usernameUsuario: String,
     tipoOperacao: String,
+    descricao: String,
     dataOperacao: Date,
     categoria: String,
     valor: Number,

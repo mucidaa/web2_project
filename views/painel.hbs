@@ -1,4 +1,78 @@
 <h1>Painelzinho onlineee do {{usuario.username}}</h1>
-<pre>
-    {{{j}}}
-</pre>
+
+<h2>Nova Operação</h2>
+<form action="/dashboard/operacao" method="POST">
+  <label>Tipo:
+    <select name="tipoOperacao" required>
+      <option value="Entrada">Entrada</option>
+      <option value="Saída">Saída</option>
+    </select>
+  </label><br>
+
+  <label>Data:
+    <input type="date" name="dataOperacao" required>
+  </label><br>
+
+  <label>Categoria:
+    <select name="categoria" required>
+      <option value="Salário">Salário</option>
+      <option value="Investimentos">Investimentos</option>
+      <option value="Transferência">Transferência</option>
+      <option value="Presente">Presente</option>
+      <option value="Moradia">Moradia</option>
+      <option value="Alimentação">Alimentação</option>
+      <option value="Transporte">Transporte</option>
+      <option value="Saúde">Saúde</option>
+      <option value="Lazer">Lazer</option>
+      <option value="Impostos">Impostos</option>
+      <option value="Outros">Outros</option>
+    </select>
+  </label><br>
+
+  <label>Valor:
+    <input type="number" name="valor" step="0.01" required>
+  </label><br>
+
+  <label>Descrição:
+    <input type="text" name="descricao" placeholder="Descrição da operação" required>
+  </label><br>
+
+  <button type="submit">Adicionar</button>
+</form>
+
+<hr>
+
+<h2>Operações</h2>
+
+{{#if operacoes.length}}
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Data</th>
+      <th>Categoria</th>
+      <th>Valor (R$)</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each operacoes}}
+    <tr>
+      <td>{{this.tipoOperacao}}</td>
+      <td>{{this.dataOperacao}}</td>
+      <td>{{this.categoria}}</td>
+      <td>{{this.valor}}</td>
+      <td>{{this.descricao}}</td>
+      <td>
+        <form action="/dashboard/operacao/{{this._id}}" method="GET" style="display:inline;">
+          <button type="submit" onclick="return confirm('Deletar essa operação?')">Deletar</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<p>Você ainda não tem operações cadastradas.</p>
+{{/if}}

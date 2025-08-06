@@ -44,7 +44,22 @@ exports.register = async (req, res, next) => {
 
     try {
         await usuario.save()
-        return res.status(200).json({ msg : "deu certo"})
+        
+        const token = jwt.sign(
+            {
+                id: usuario._id,
+                username: usuario.username,
+            },
+            'SENHA_SUPER_SECRETA',
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 3600000,
+        });
+
+        return res.redirect('/dashboard');
 
     } catch (err) {
         return next(err);
@@ -81,7 +96,12 @@ exports.login = async (req, res, next) => {
             },
             'SENHA_SUPER_SECRETA'
         );
-        return res.status(200).json({ msg: 'logou', token: token });
+
+        res.cookie('token', token, {
+            maxAge: 3600000,
+        });
+
+        return res.redirect("/dashboard");
 
     } catch (err) {
         return next(err);

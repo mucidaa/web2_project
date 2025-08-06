@@ -3,12 +3,13 @@ const mongoose = require('mongoose')
 const Operacao = mongoose.model('Operacao', {
     usernameUsuario: String,
     tipoOperacao: String,
+    dataOperacao: Date,
     categoria: String,
     valor: Number,
-    dataCadastro : {
+    dataCadastro: {
         type: Date,
-        default: Date.now()
-    }
+        default: Date.now(),
+    },
 });
 
 module.exports = Operacao;

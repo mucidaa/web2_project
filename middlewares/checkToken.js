@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = req.cookies.token
 
     try {
         if (!token) {
@@ -15,7 +14,6 @@ module.exports = (req, res, next) => {
     try {
         
         jwt.verify(token, 'SENHA_SUPER_SECRETA');
-        console.log(jwt.decode(token))
         return next()
 
     } catch (err) {

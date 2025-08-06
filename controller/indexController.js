@@ -1,3 +1,3 @@
 exports.index = (req, res) => {
-    res.status(200).json({ msg: 'index funcionando'})
+    res.render("index", {title: "Titulo"})
 }

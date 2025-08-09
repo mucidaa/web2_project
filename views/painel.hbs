@@ -1,78 +1,124 @@
-<h1>Painelzinho onlineee do {{usuario.username}}</h1>
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-12 text-center mb-4">
+        <h1>Painel do {{usuario.username}}</h1>
+      </div>
+    </div>
 
-<h2>Nova Operação</h2>
-<form action="/dashboard/operacao" method="POST">
-  <label>Tipo:
-    <select name="tipoOperacao" required>
-      <option value="Entrada">Entrada</option>
-      <option value="Saída">Saída</option>
-    </select>
-  </label><br>
-
-  <label>Data:
-    <input type="date" name="dataOperacao" required>
-  </label><br>
-
-  <label>Categoria:
-    <select name="categoria" required>
-      <option value="Salário">Salário</option>
-      <option value="Investimentos">Investimentos</option>
-      <option value="Transferência">Transferência</option>
-      <option value="Presente">Presente</option>
-      <option value="Moradia">Moradia</option>
-      <option value="Alimentação">Alimentação</option>
-      <option value="Transporte">Transporte</option>
-      <option value="Saúde">Saúde</option>
-      <option value="Lazer">Lazer</option>
-      <option value="Impostos">Impostos</option>
-      <option value="Outros">Outros</option>
-    </select>
-  </label><br>
-
-  <label>Valor:
-    <input type="number" name="valor" step="0.01" required>
-  </label><br>
-
-  <label>Descrição:
-    <input type="text" name="descricao" placeholder="Descrição da operação" required>
-  </label><br>
-
-  <button type="submit">Adicionar</button>
-</form>
-
-<hr>
-
-<h2>Operações</h2>
-
-{{#if operacoes.length}}
-<table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-    <tr>
-      <th>Tipo</th>
-      <th>Data</th>
-      <th>Categoria</th>
-      <th>Valor (R$)</th>
-      <th>Descrição</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each operacoes}}
-    <tr>
-      <td>{{this.tipoOperacao}}</td>
-      <td>{{this.dataOperacao}}</td>
-      <td>{{this.categoria}}</td>
-      <td>{{this.valor}}</td>
-      <td>{{this.descricao}}</td>
-      <td>
-        <form action="/dashboard/operacao/{{this._id}}" method="GET" style="display:inline;">
-          <button type="submit" onclick="return confirm('Deletar essa operação?')">Deletar</button>
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Receita Total</h5>
+            <p class="card-text fs-2">R$ {{ totalReceita }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-danger mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Despesa Total</h5>
+            <p class="card-text fs-2">R$ {{ totalDespesa }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Saldo Atual</h5>
+            <p class="card-text fs-2">R$ {{ saldoAtual }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Nova Operação</h2>
+        <form action="/dashboard/operacao" method="POST">
+          <div class="mb-3">
+            <label for="tipoOperacao" class="form-label">Tipo</label>
+            <select class="form-select" id="tipoOperacao" name="tipoOperacao" required>
+              <option value="Entrada">Entrada</option>
+              <option value="Saída">Saída</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="dataOperacao" class="form-label">Data</label>
+            <input type="date" class="form-control" id="dataOperacao" name="dataOperacao" required>
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select class="form-select" id="categoria" name="categoria" required>
+              <option value="Salário">Salário</option>
+              <option value="Investimentos">Investimentos</option>
+              <option value="Transferência">Transferência</option>
+              <option value="Presente">Presente</option>
+              <option value="Moradia">Moradia</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Impostos">Impostos</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição da operação" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+          <br>
         </form>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-{{else}}
-<p>Você ainda não tem operações cadastradas.</p>
-{{/if}}
+      </div>
+
+      <div class="col-md-8">
+        <h2>Operações</h2>
+        {{#if operacoes.length}}
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Categoria</th>
+                <th>Valor (R$)</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each operacoes}}
+              <tr>
+                <td><span class="badge {{#if (eq this.tipoOperacao 'Entrada')}}text-bg-success{{else}}text-bg-danger{{/if}}">{{this.tipoOperacao}}</span></td>
+                <td>{{this.dataOperacao}}</td>
+                <td>{{this.categoria}}</td>
+                <td>{{this.valor}}</td>
+                <td>{{this.descricao}}</td>
+                <td>
+                  <form action="/dashboard/operacao/{{this._id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar essa operação?')">Deletar</button>
+                  </form>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        {{else}}
+        <div class="alert alert-info" role="alert">
+          Você ainda não tem operações cadastradas.
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>

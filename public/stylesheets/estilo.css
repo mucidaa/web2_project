@@ -79,10 +79,10 @@ nav.navbar-transparente {
 
 /* Fundo gradiente moderno financeiro */
 body {
-	background: linear-gradient(50deg, #05f601, #eff1f0);
+	background: linear-gradient(135deg, #ffffff, #ffffff);
 	background-attachment: fixed;
 	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-	color: #ffffff;
+	color: #333;
 }
 
 /* Títulos */

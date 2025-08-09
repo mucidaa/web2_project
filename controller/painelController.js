@@ -14,9 +14,7 @@ exports.painel = async (req, res, next) => {
 
     try {
         if (username !== usernameByToken) {
-            throw new Error(
-                'Você está tentando logar em um painel que não é o seu'
-            );
+            throw new Error('Você está tentando logar em um painel que não é o seu');
         }
     } catch (err) {
         return next(err);
@@ -26,14 +24,29 @@ exports.painel = async (req, res, next) => {
     const nomesCategorias = await getCategorias(username);
 
     const categorias = {};
-
     for (const categoria of nomesCategorias) {
-        categorias[categoria] = await getOperacoesByCategoria(
-            username,
-            categoria
-        );
+        categorias[categoria] = await getOperacoesByCategoria(username, categoria);
     }
 
+    // --- Cálculo das somas ---
+    let totalReceitaCentavos = operacoes
+        .filter(op => op.tipoOperacao === 'Entrada')
+        .reduce((soma, op) => soma + op.valor, 0);
+
+    let totalDespesaCentavos = operacoes
+        .filter(op => op.tipoOperacao === 'Saída')
+        .reduce((soma, op) => soma + op.valor, 0);
+
+    let saldoAtualCentavos = totalReceitaCentavos - totalDespesaCentavos;
+
+    // Formatando para reais com vírgula
+    const formatarReais = (valorCentavos) => (valorCentavos / 100).toFixed(2).replace('.', ',');
+
+    const totalReceita = formatarReais(totalReceitaCentavos);
+    const totalDespesa = formatarReais(totalDespesaCentavos);
+    const saldoAtual = formatarReais(saldoAtualCentavos);
+
+    // --- Formatação da lista ---
     const operacoesFormatadas = operacoes.map((op) => {
         return {
             ...op.toObject(),
@@ -43,16 +56,36 @@ exports.painel = async (req, res, next) => {
     });
 
     const mes = await getOperacoesMesAtual(username);
-
     const usuario = await getUsuarioAtual(username);
+
+    // Cálculo do total geral
+    const totalGeralCentavos = operacoes.reduce((soma, op) => soma + op.valor, 0);
+
+    const categoriasData = [];
+
+    for (const categoria of nomesCategorias) {
+        const opsCategoria = await getOperacoesByCategoria(username, categoria);
+        const totalCategoriaCentavos = opsCategoria.reduce((soma, op) => soma + op.valor, 0);
+        const porcentagem = totalGeralCentavos > 0 ? ((totalCategoriaCentavos / totalGeralCentavos) * 100).toFixed(2) : 0;
+
+        categoriasData.push({
+            categoria,
+            valor: (totalCategoriaCentavos / 100).toFixed(2), // em reais
+            porcentagem
+        });
+    }
 
     contexto = {
         usuario,
         operacoes: operacoesFormatadas,
         categorias,
         mes,
+        totalReceita,
+        totalDespesa,
+        saldoAtual,
+        categoriasData
     };
-    
+
     return res.render('painel', contexto);
 };
 

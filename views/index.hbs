@@ -1,51 +1,90 @@
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <!-- Formulário de Login -->
-    <div class="col-md-6">
-      <h1 class="text-center mb-4">Fazer Login</h1>
-      <form method="POST" action="/auth/login" class="border p-4 rounded shadow-sm bg-light">
-        <div class="mb-3">
-          <label for="loginUsername" class="form-label">Usuário</label>
-          <input type="text" name="username" id="loginUsername" class="form-control" placeholder="Digite seu usuário" required>
+<section id="home">
+    <!-- Início seção home -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <!-- Textos da seção -->
+                <div class="align-self-center">
+                    <h1 class="display-4">Controle suas finanças com inteligência.</h1>
+                </div>
+            </div>
+            <!--/fim textos da seção -->
+            <div class="col-md-6 d-none d-md-block">
+                <img src="images/financas.png" class="img-fluid" alt="Controle Financeiro">
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="loginSenha" class="form-label">Senha</label>
-          <input type="password" name="senha" id="loginSenha" class="form-control" placeholder="Digite sua senha" required>
-        </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-success">Entrar</button>
-        </div>
-      </form>
     </div>
+</section>
+<!--/fim seção home -->
 
-    <!-- Formulário de Registro -->
-    <div class="col-md-6 mt-5 mt-md-0">
-      <h1 class="text-center mb-4">Registrar</h1>
-      <form method="POST" action="/auth/register" class="border p-4 rounded shadow-sm bg-light">
-        <div class="mb-3">
-          <label for="registerNome" class="form-label">Nome</label>
-          <input type="text" name="nome" id="registerNome" class="form-control" placeholder="Digite seu nome" required>
+<section class="caixa">
+    <!--/Início seção saiba -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <div class="align-self-center">
+                    <h2>Organize seu orçamento</h2>
+                    <p>Tenha controle total sobre sua renda e despesas com nosso sistema de gerenciamento financeiro.</p>
+                    <p> <a href="#" class="btn btn-primary">Saiba mais</a></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <video class="img-fluid" autoplay muted loop>
+                    <source src="videos/finanças.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="registerUsername" class="form-label">Usuário</label>
-          <input type="text" name="username" id="registerUsername" class="form-control" placeholder="Escolha um nome de usuário" required>
-        </div>
-        <div class="mb-3">
-          <label for="registerEmail" class="form-label">E-mail</label>
-          <input type="text" name="email" id="registerEmail" class="form-control" placeholder="Digite seu e-mail" required>
-        </div>
-        <div class="mb-3">
-          <label for="registerSenha" class="form-label">Senha</label>
-          <input type="password" name="senha" id="registerSenha" class="form-control" placeholder="Digite uma senha" required>
-        </div>
-        <div class="mb-3">
-          <label for="registerConfirmaSenha" class="form-label">Confirme sua senha</label>
-          <input type="password" name="confirmaSenha" id="registerConfirmaSenha" class="form-control" placeholder="Repita a senha" required>
-        </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Registrar</button>
-        </div>
-      </form>
     </div>
-  </div>
-</div>
+</section>
+<!--/FIM seção saiba -->
+
+<section class="caixa bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">💡 Dicas de economia</h2>
+        <p class="text-center text-muted mb-5">
+            Pequenas mudanças no seu dia a dia podem gerar grandes resultados no seu bolso.
+        </p>
+        
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="images/dicas1.jpeg" class="card-img-top" alt="Dicas de Poupança">
+                    <div class="card-body">
+                        <h5 class="card-title">Poupe antes de gastar</h5>
+                        <p class="card-text">Separe uma parte do seu salário assim que receber. Invista ou guarde para emergências.</p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="images/dicas2.png" class="card-img-top" alt="Controle de Despesas">
+                    <div class="card-body">
+                        <h5 class="card-title">Controle seus gastos</h5>
+                        <p class="card-text">Anote tudo que gasta no mês e identifique onde cortar despesas desnecessárias.</p>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="images/dicas3.png" class="card-img-top" alt="Investimento seguro">
+                    <div class="card-body">
+                        <h5 class="card-title">Invista com segurança</h5>
+                        <p class="card-text">Comece aprendendo sobre aplicações seguras, como renda fixa, e invista pequenas quantias em diferentes áreas. Isso ajuda a proteger seu dinheiro e manter crescimento constante.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--/FIM seção Tempo -->
+

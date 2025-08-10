@@ -9,8 +9,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalSair">Home <span
-                        class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalSair">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalSair2">Sair</a>
             </li>
         </ul>
     </div>
@@ -30,6 +32,29 @@
                 Tem certeza que deseja sair para a página inicial?
                 <br>
                 Precisará fazer login novamente.
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="/" class="btn btn-danger">Sim, sair</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Saída -->
+<div class="modal fade" id="modalSair2" tabindex="-1" aria-labelledby="modalSairLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSairLabel2">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+
+            <div class="modal-body">
+                Tem certeza que deseja sair?
             </div>
 
             <div class="modal-footer">

@@ -1,6 +1,5 @@
 const Usuario = require('../model/Usuario')
 
-var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 exports.register = async (req, res, next) => {
@@ -32,14 +31,11 @@ exports.register = async (req, res, next) => {
         return next(err);
     }
 
-    const salt = await bcrypt.genSalt(12)
-    const senhaHash = await bcrypt.hash(senha, salt)
-
     const usuario = new Usuario({
         nome,
         username,
         email,
-        senha: senhaHash
+        senha
     })
 
     try {
@@ -83,9 +79,7 @@ exports.login = async (req, res, next) => {
             throw new Error('Usuário não existe');
         }
 
-        const comparaSenhas = await bcrypt.compare(senha, usuario.senha)
-
-        if (!comparaSenhas) {
+        if (!senha == usuario.senha) {
             throw new Error('Senha incorreta!');
         }
 

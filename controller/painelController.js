@@ -21,32 +21,7 @@ exports.painel = async (req, res, next) => {
     }
 
     const operacoes = await getOperacoes(username);
-    const nomesCategorias = await getCategorias(username);
 
-    const categorias = {};
-    for (const categoria of nomesCategorias) {
-        categorias[categoria] = await getOperacoesByCategoria(username, categoria);
-    }
-
-    // --- Cálculo das somas ---
-    let totalReceitaCentavos = operacoes
-        .filter(op => op.tipoOperacao === 'Entrada')
-        .reduce((soma, op) => soma + op.valor, 0);
-
-    let totalDespesaCentavos = operacoes
-        .filter(op => op.tipoOperacao === 'Saída')
-        .reduce((soma, op) => soma + op.valor, 0);
-
-    let saldoAtualCentavos = totalReceitaCentavos - totalDespesaCentavos;
-
-    // Formatando para reais com vírgula
-    const formatarReais = (valorCentavos) => (valorCentavos / 100).toFixed(2).replace('.', ',');
-
-    const totalReceita = formatarReais(totalReceitaCentavos);
-    const totalDespesa = formatarReais(totalDespesaCentavos);
-    const saldoAtual = formatarReais(saldoAtualCentavos);
-
-    // --- Formatação da lista ---
     const operacoesFormatadas = operacoes.map((op) => {
         return {
             ...op.toObject(),
@@ -55,35 +30,19 @@ exports.painel = async (req, res, next) => {
         };
     });
 
-    const mes = await getOperacoesMesAtual(username);
     const usuario = await getUsuarioAtual(username);
-
-    // Cálculo do total geral
-    const totalGeralCentavos = operacoes.reduce((soma, op) => soma + op.valor, 0);
-
-    const categoriasData = [];
-
-    for (const categoria of nomesCategorias) {
-        const opsCategoria = await getOperacoesByCategoria(username, categoria);
-        const totalCategoriaCentavos = opsCategoria.reduce((soma, op) => soma + op.valor, 0);
-        const porcentagem = totalGeralCentavos > 0 ? ((totalCategoriaCentavos / totalGeralCentavos) * 100).toFixed(2) : 0;
-
-        categoriasData.push({
-            categoria,
-            valor: (totalCategoriaCentavos / 100).toFixed(2), // em reais
-            porcentagem
-        });
-    }
-
+    const receita = await getReceita(username);
+    const despesa = await getDespesa(username);
+    const saldo = await receita-despesa;
+    const categorias = await getCategoriasDetalhadas(username)
+    console.log(categorias)
     contexto = {
         usuario,
         operacoes: operacoesFormatadas,
         categorias,
-        mes,
-        totalReceita,
-        totalDespesa,
-        saldoAtual,
-        categoriasData
+        receita: (receita / 100).toFixed(2).replace('.', ','),
+        despesa: (despesa / 100).toFixed(2).replace('.', ','),
+        saldo: (saldo / 100).toFixed(2).replace('.', ',')
     };
 
     return res.render('painel', contexto);
@@ -163,38 +122,66 @@ const getUsername = (req) => {
 };
 
 const getOperacoes = async (username) => {
-    return await Operacao.find({ usernameUsuario: username });
+    return await Operacao.find({ usernameUsuario: username }).sort({dataOperacao: -1});
 };
 
-const getOperacoesMesAtual = async (username) => {
-    const hoje = new Date();
-
-    const primeiroDiaDoMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
-
-    console.log('Username:', username);
-    console.log('Primeiro dia do mês:', primeiroDiaDoMes.toISOString());
-
-    const resultado = await Operacao.find({
-        usernameUsuario: username,
-        dataOperacao: { $gte: primeiroDiaDoMes },
-    });
-
-    console.log('Operações encontradas:', resultado.length);
-
-    return resultado;
+const getCategoriasSaida = async (username) => {
+    return await Operacao.distinct('categoria', { usernameUsuario: username, tipoOperacao: "Saída" });
 };
 
-const getCategorias = async (username) => {
-    return await Operacao.distinct('categoria', { usernameUsuario: username });
-};
-
-const getOperacoesByCategoria = async (username, categoria) => {
+const getOperacoesSaidaByCategoria = async (username, categoria) => {
     return await Operacao.find({
         usernameUsuario: username,
         categoria: categoria,
-    });
+        tipoOperacao: 'Saída',
+    }).sort({ dataOperacao: -1 });
 };
 
 const getUsuarioAtual = async (username) => {
     return await Usuario.findOne({ username: username });
 };
+
+const getReceita = async(username) => {
+    const opsEntrada = await Operacao.find({
+        usernameUsuario: username,
+        tipoOperacao: "Entrada"
+    });
+
+    return opsEntrada.reduce((soma, op) => {return soma + op.valor}, 0)
+}
+
+const getDespesa = async(username) => {
+    const opsEntrada = await Operacao.find({
+        usernameUsuario: username,
+        tipoOperacao: "Saída"
+    });
+
+    return opsEntrada.reduce((soma, op) => {return soma + op.valor}, 0)
+}
+
+const getCategoriasDetalhadas = async(username) => {
+
+    let categoriasDetalhadas = []
+    
+    const nomesCategorias = await getCategoriasSaida(username)
+    console.log(nomesCategorias)
+
+    const total = await getDespesa(username)
+
+    for (nome of nomesCategorias) {
+
+        categoriasDetalhadas.push({
+            nome: nome,
+            valor: (await getTotalCategoria(username, nome)/100).toFixed(2).replace(".",","),
+            porcentagem: (await getTotalCategoria(username, nome)/total*100).toFixed(2)
+        })
+    }
+
+    return categoriasDetalhadas
+}
+
+const getTotalCategoria = async (username, categoria) => {
+    const operacoes = await getOperacoesSaidaByCategoria(username, categoria)
+    return operacoes.reduce((soma, op) => {return soma + op.valor}, 0)
+}
+

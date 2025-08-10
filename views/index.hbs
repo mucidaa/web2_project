@@ -1,5 +1,6 @@
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container-fluid bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="#">Finanças</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,12 +13,12 @@
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item login">
-          <button type="button" class="btn btn-custom btn-sm btn-verde" data-toggle="modal" data-target="#loginModal">
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">
             Entrar
           </button>
         </li>
         <li class="nav-item cadastro">
-          <button type="button" class="btn btn-custom btn-sm btn-verde" data-toggle="modal"
+          <button type="button" class="btn btn-success" data-toggle="modal"
             data-target="#registerModal">
             Cadastre-se
           </button>
@@ -25,6 +26,7 @@
       </ul>
     </div>
   </nav>
+</div>
 
   <!-- Modal Login -->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">

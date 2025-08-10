@@ -37,6 +37,7 @@ exports.painel = async (req, res, next) => {
     const categorias = await getCategoriasDetalhadas(username)
     console.log(categorias)
     contexto = {
+        title: "MC Finanças",
         usuario,
         operacoes: operacoesFormatadas,
         categorias,

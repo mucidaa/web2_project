@@ -1,3 +1,4 @@
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">MC Finanças</a>
@@ -67,9 +68,11 @@
 </div>
 
 <div class="container mt-5">
+    <a href="/"><button type="button" class="btn btn-danger"> Sair</button></a>
+
     <div class="row">
         <div class="col-12 text-center mb-4">
-            <h1 style="color: green;">Painel do {{usuario.username}}</h1>
+            <h2>Bem vindo,{{usuario.username}}</h2>
         </div>
     </div>
 
@@ -78,7 +81,7 @@
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Receita Total</h5>
-                    <p class="card-text fs-2">R$ {{ totalReceita }}</p>
+                    <p class="card-text fs-2">R$ {{ receita }}</p>
                 </div>
             </div>
         </div>
@@ -86,7 +89,7 @@
             <div class="card text-white bg-danger mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Despesa Total</h5>
-                    <p class="card-text fs-2">R$ {{ totalDespesa }}</p>
+                    <p class="card-text fs-2">R$ {{ despesa }}</p>
                 </div>
             </div>
         </div>
@@ -94,7 +97,7 @@
             <div class="card text-white bg-primary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Saldo Atual</h5>
-                    <p class="card-text fs-2">R$ {{ saldoAtual }}</p>
+                    <p class="card-text fs-2">R$ {{ saldo }}</p>
                 </div>
             </div>
         </div>
@@ -103,8 +106,9 @@
     <hr>
 
     <div class="row">
+
         <div class="col-md-4">
-            <h2>Nova Operação</h2>
+            <h3>Nova Operação</h3>
             <p>Registre uma nova operação financeira para manter seu controle atualizado.</p>
             <br>
             <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal"
@@ -182,7 +186,7 @@
             </div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-8 text-center">
             <h2>Operações</h2>
             {{#if operacoes.length}}
             <div class="table-responsive">
@@ -208,7 +212,7 @@
                             <td>{{this.valor}}</td>
                             <td>{{this.descricao}}</td>
                             <td>
-                                <form action="/dashboard/operacao/{{this._id}}?_method=DELETE" method="POST">
+                                <form action="/dashboard/operacao/{{this._id}}" method="GET">
                                     <button type="submit" class="btn btn-danger btn-sm"
                                         onclick="return confirm('Tem certeza que deseja deletar essa operação?')">Deletar</button>
                                 </form>
@@ -225,21 +229,17 @@
             {{/if}}
         </div>
 
-        <hr>
-
-        <div class="row my-5">
-            <h2>Distribuição por Categoria</h2>
-            <br>
+        <div class="col-12 my-3 pb-5 text-center">
+            <h2>Distribuição dos Gastos</h2>
             <div class="col-12">
-                {{#if categoriasData.length}}
-                {{#each categoriasData}}
+                {{#if categorias.length}}
+                {{#each categorias}}
                 <div class="mb-2">
                     <div class="d-flex justify-content-between">
-                        <span><strong>{{categoria}}</strong></span>
-                        <span>{{porcentagem}}% (R$ {{valor}})</span>
+                        <h4>{{nome}} {{porcentagem}}% (R$ {{valor}})</h4>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{porcentagem}}%"
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{porcentagem}}%"
                             aria-valuenow="{{porcentagem}}" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
@@ -249,7 +249,6 @@
                 <div class="alert alert-info">Nenhuma operação cadastrada para exibir o gráfico.</div>
                 {{/if}}
             </div>
-
         </div>
     </div>
 </div>

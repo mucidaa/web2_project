@@ -13,9 +13,7 @@
 	background-color: #f9f9f9;
 }
 
-.clima {
-	margin: 20px;
-}
+
 
 /* Switch personalizado (manteve visual moderno) */
 .switch--shadow:checked + label:before {
@@ -136,8 +134,6 @@ footer p a {
 .segundoFooter .navbar-nav a:hover {
 	color: #46c47c;
 }
-
-/* painel.hbs*/
 
 
 /* Responsividade - ajustes menores */

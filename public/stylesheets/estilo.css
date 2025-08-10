@@ -13,38 +13,6 @@
 	background-color: #f9f9f9;
 }
 
-
-
-/* Switch personalizado (manteve visual moderno) */
-.switch--shadow:checked + label:before {
-	background-color: #46c47c; /* Verde financeiro claro */
-}
-.switch--shadow:checked + label:after {
-	transform: translateX(30px);
-}
-
-/* Navegação */
-nav.navbar-transparente {
-	padding: 5px 0px;
-	background: rgba(12, 95, 41, 0.8);
-}
-.navbar-light .navbar-nav .nav-link {
-	color: white;
-}
-.navbar-light .navbar-nav .nav-link:hover {
-	color: #c8f5e7; /* Verde claro suave */
-}
-.navbar-light .navbar-toggler {
-	color: white;
-	border-color: rgba(255,255,255,0.5);
-}
-
-.divisor {
-	width: 1px;
-	background: white;
-	margin: 12px 15px;
-}
-
 .login,
 .cadastro {
 	margin-left: 50px;
@@ -67,13 +35,7 @@ nav.navbar-transparente {
 	background: white;
 	color: #1db954;
 }
-.btn-branco {
-	border: 2px solid white;
-}
-.btn-branco:hover {
-	background-color: white;
-	color: #1db954;
-}
+
 
 /* Fundo gradiente moderno financeiro */
 body {
@@ -105,32 +67,5 @@ h4 {
 	font-weight: 600;
 }
 
-/* Carrossel */
-.carousel-control-next,
-.carousel-control-prev {
-	width: 5%;
-}
 
-/* Rodapé 1 */
-footer p a {
-	margin: 5px 15px;
-	color: #0c5f29;
-}
 
-/* Rodapé 2 */
-.segundoFooter {
-	background: #0c0c0c;
-	padding: 50px 0 20px;
-}
-.segundoFooter h4 {
-	color: #b0b0b0;
-	font-size: 0.8em;
-	text-transform: uppercase;
-}
-.segundoFooter .navbar-nav a {
-	color: white;
-	font-size: 0.8em;
-}
-.segundoFooter .navbar-nav a:hover {
-	color: #46c47c;
-}
